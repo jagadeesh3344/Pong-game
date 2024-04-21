@@ -63,43 +63,84 @@ def show_main_window(final_score):
     # Here we assume the player wins for demonstration purposes
     show_end_game_message("Player")
 
+invalid = False # boolean for invalid input
+
+
 def get_final_score():
-    final_score = int(final_score_entry.get())
+
+    global invalid
+
+    for ch in final_score_entry.get():
+        if ord(ch)<48 or ord(ch)>57: # check char's ascii code
+            if not invalid:
+                Alert()
+            return
+        
+    if final_score_entry.get()=='' or not int(final_score_entry.get()):  # empty string or equal 0
+        if not invalid:
+                Alert()
+        return
+    
+    final_score = int(final_score_entry.get()) 
+
+    if invalid:
+        alert.destroy()
+        invalid = 0
+
+    welcome_win.destroy()
     show_main_window(final_score)
 
-def main_window():
-    welcome_label.destroy()
-    final_score_label.destroy()
-    final_score_entry.destroy()
-    next_button.destroy()
-    show_main_window(0)
+def Alert(): # Invalid input
+     global alert
+     alert = tk.Label(welcome_win, text="Enter a valid input")
+     alert.pack()
 
+     global invalid
+     invalid = 1
+     
+
+def main_window():
+     exit_all_windows()
+     main()
+
+    
 def exit_all_windows():
-    for window in welcome_win.winfo_children():
+    for window in start_window.winfo_children():
         window.destroy()
-    welcome_win.destroy()
+    start_window.destroy()
 
 # Create a tkinter window
-welcome_win = tk.Tk()
-welcome_win.title("Welcome to Pong Game")
-welcome_win.geometry("500x250")
-welcome_win.resizable(width=False, height=False)
-welcome_win.configure(bg="black")
 
-# Welcoming message
-welcome_label = tk.Label(welcome_win, text="Welcome to Pong Game!", fg="yellow", bg="black", font=("Arial", 18))
-welcome_label.pack(pady=20)
+def main():
+   global start_window
+   start_window = tk.Tk()
+   start_window.withdraw() 
 
-# Prompt for final score
-final_score_label = tk.Label(welcome_win, text="Enter the final score:", fg="yellow", bg="black", font=("Arial", 14))
-final_score_label.pack()
+   global welcome_win
+   welcome_win = tk.Tk()
+   welcome_win.title("Welcome to Pong Game")
+   welcome_win.geometry("500x250")
+   welcome_win.resizable(width=False, height=False)
+   welcome_win.configure(bg="black")
 
-# Entry for final score
-final_score_entry = tk.Entry(welcome_win, font=("Arial", 14))
-final_score_entry.pack(pady=10)
+   # Welcoming message
+   welcome_label = tk.Label(welcome_win, text="Welcome to Pong Game!", fg="yellow", bg="black", font=("Arial", 18))
+   welcome_label.pack(pady=20)
 
-# Next button
-next_button = tk.Button(welcome_win, text="Next", command=get_final_score)
-next_button.pack(pady=10)
+   # Prompt for final score
+   final_score_label = tk.Label(welcome_win, text="Enter the final score:", fg="yellow", bg="black", font=("Arial", 14))
+   final_score_label.pack()
 
-welcome_win.mainloop()
+   # Entry for final score
+   global final_score_entry
+   final_score_entry = tk.Entry(welcome_win, font=("Arial", 14))
+   final_score_entry.pack(pady=10)
+
+   # Next button
+   next_button = tk.Button(welcome_win, text="Next", command=get_final_score)
+   next_button.pack(pady=10)
+
+
+   start_window.mainloop()
+
+main()

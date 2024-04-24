@@ -1,4 +1,5 @@
 import tkinter as tk
+from GameBoard import PongGame
 
 def show_end_game_message(winner_name):
     end_game_win = tk.Toplevel()
@@ -6,8 +7,9 @@ def show_end_game_message(winner_name):
     end_game_win.geometry("500x250")
     end_game_win.resizable(width=False, height=False)
     end_game_win.configure(bg="black")
+    print(winner_name)
 
-    if winner_name == "Player":
+    if winner_name == "player":
         message = f"Congratulations, {winner_name}!"
     else:
         message = "Game Over"
@@ -20,51 +22,8 @@ def show_end_game_message(winner_name):
 
     exit_button = tk.Button(end_game_win, text="Exit", command=exit_all_windows)
     exit_button.pack(pady=5)
-
-def show_main_window(final_score):
-    # Function to show the main window with the provided final score
-    win = tk.Toplevel()
-    win.title("Pong Game")
-    win.geometry("1200x700")
-    win.resizable(width=False, height=False)
-    mycolor = '#48C9B0'
-    win.configure(bg=mycolor)
-
-    # Label for Player
-    player_label = tk.Label(win, text="Player", fg="yellow", bg="black", width=30, height=3 , font=("Arial", 12))
-    player_label.place(x=200, y=30)
-
-    # Score label for Player
-    player_label = tk.Label(win, text=f"Score : 0", fg="yellow", bg="#4A235A", width=13, height=3 , font=("Arial", 10))
-    player_label.place(x=280, y=100)
-
-    # Label for Computer
-    computer_label = tk.Label(win, text="Computer", fg="yellow", bg="black", width=30, height=3 , font=("Arial", 12))
-    computer_label.place(x=800, y=30)
-
-    # Score label for Computer
-    computer_score_label = tk.Label(win, text="Score: 0", fg="yellow", bg="#4A235A", width=13, height=3 , font=("Arial", 10))
-    computer_score_label.place(x=890, y=100)
-
-    # Create left paddle
-    left_paddle = tk.Canvas(win, width=10, height=100, bg="blue", highlightthickness=0)
-    left_paddle.place(x=20, y=300)
-
-    # Create right paddle
-    right_paddle = tk.Canvas(win, width=10, height=100, bg="blue", highlightthickness=0)
-    right_paddle.place(x=1170, y=300)
-
-    # Create ball
-    ball = tk.Canvas(win, width=20, height=20, bg="white", highlightthickness=0)
-    ball.create_oval(0, 0, 20, 20, fill="white")  # to make the ball circle with border
-    ball.place(x=610, y=330)
-
-    # Simulate end of the game
-    # Here we assume the player wins for demonstration purposes
-    show_end_game_message("Player")
-
+    
 invalid = False # boolean for invalid input
-
 
 def get_final_score():
 
@@ -80,15 +39,14 @@ def get_final_score():
         if not invalid:
                 Alert()
         return
-    
+    global final_score
     final_score = int(final_score_entry.get()) 
 
     if invalid:
-        alert.destroy()
-        invalid = 0
+        invalid = False
 
     welcome_win.destroy()
-    show_main_window(final_score)
+    show_end_game_message(PongGame().run(final_score))
 
 def Alert(): # Invalid input
      global alert
@@ -96,7 +54,7 @@ def Alert(): # Invalid input
      alert.pack()
 
      global invalid
-     invalid = 1
+     invalid = True
      
 
 def main_window():
@@ -144,3 +102,4 @@ def main():
    start_window.mainloop()
 
 main()
+

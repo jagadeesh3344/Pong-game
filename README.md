@@ -17,8 +17,8 @@ Welcome to our AI-Powered Pong Game project! This repository contains the source
 
 Meet the talented individuals behind Pong:
 
-- **[Abdulrahman Muhammad](https://github.com/Abdlrhman00)
-- **[Alaa Saeed](https://github.com/Alaa0Saeed)
-- **[Mohamed Khaled](https://github.com/moh18khaled)
-- **[Ahmed Mostafa](https://github.com/AhmedMu7)
-- **[Kareem Ragab](https://github.com/KareemRagabAbdelhameed)
+- [Abdulrahman Muhammad](https://github.com/Abdlrhman00)
+- [Alaa Saeed](https://github.com/Alaa0Saeed)
+- [Mohamed Khaled](https://github.com/moh18khaled)
+- [Ahmed Mostafa](https://github.com/AhmedMu7)
+- [Kareem Ragab](https://github.com/KareemRagabAbdelhameed)

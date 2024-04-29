@@ -14,7 +14,7 @@ Welcome to our AI-Powered Pong Game project! This repository contains the source
 - The game ends when one player reaches the specified winning score.
   
 
-### Team Members
+## Team Members
 
 Meet the talented individuals behind Pong:
 

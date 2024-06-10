@@ -1,4 +1,4 @@
-import pygame,sys,random
+import pygame, sys, random
 
 class PongGame:
     def __init__(self):
@@ -20,8 +20,7 @@ class PongGame:
         self.player = pygame.Rect(0, 0, 20, 100)
         self.player.midright = (self.screen_width, self.screen_height / 2)
 
-        
-        self.general_speed=6
+        self.general_speed = 6
 
         self.ball_speed_x = self.general_speed
         self.ball_speed_y = self.general_speed
@@ -36,35 +35,32 @@ class PongGame:
         self.ball_speed_x = self.general_speed * random.choice([-1, 1])
         self.ball_speed_y = self.general_speed * random.choice([-1, 1])
 
-# if one of them is the winner return his name else return empty string
-
-    def point_winner(self, scorer,final_score):
-        self.player_score += scorer=="player"
-        self.computer_score += scorer=="computer"
-        if(max(self.player_score,self.computer_score)==final_score):
-            return "player" if self.player_score==final_score else "computer"
+    def point_winner(self, scorer, final_score):
+        self.player_score += scorer == "player"
+        self.computer_score += scorer == "computer"
+        if max(self.player_score, self.computer_score) == final_score:
+            return "player" if self.player_score == final_score else "computer"
         self.reset_ball()
         return ''
 
-    def animate_ball(self,final_score):
+    def animate_ball(self, final_score):
         self.ball.x += self.ball_speed_x
         self.ball.y += self.ball_speed_y
 
         if self.ball.bottom >= self.screen_height or self.ball.top <= 0:
             self.ball_speed_y *= -1
             
-        winner=''
+        winner = ''
 
         if self.ball.right >= self.screen_width:
-            winner=self.point_winner("computer",final_score)
+            winner = self.point_winner("computer", final_score)
         elif self.ball.left <= 0:
-            winner=self.point_winner("player",final_score)
+            winner = self.point_winner("player", final_score)
 
         if self.ball.colliderect(self.player) or self.ball.colliderect(self.computer):
             self.ball_speed_x *= -1
 
         return winner
-    
 
     def animate_player(self):
         self.player.y += self.player_speed
@@ -75,7 +71,7 @@ class PongGame:
         if self.player.bottom >= self.screen_height:
             self.player.bottom = self.screen_height
 
-    def animate_comuter(self):
+    def animate_computer(self):
         self.computer.y += self.computer_speed
 
         if self.ball.centery <= self.computer.centery:
@@ -121,23 +117,21 @@ class PongGame:
         pygame.display.update()
         self.clock.tick(60)
 
-    def run(self,final_score):
+    def run(self, final_score):
         while True:
             self.handle_events()
-            winner=self.animate_ball(final_score)
+            winner = self.animate_ball(final_score)
             self.animate_player()
-            self.animate_comuter()
+            self.animate_computer()
             self.draw_objects()
             self.update_display()
 
-    # to know the winner we should keep returning a string through several functions 
-    # point_winner --> animate_ball --> run
-
-            if(winner!=''):
+            if winner != '':
+                print(f"{winner} wins!")
                 pygame.time.wait(1000)
                 pygame.quit()
                 return winner
 
 if __name__ == "__main__":
     game = PongGame()
-    game.run()
+    game.run(10)  # You can adjust the final score here
